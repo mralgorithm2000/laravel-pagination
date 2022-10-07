@@ -1,79 +1,122 @@
-# laravel-js-lang
-laravel localization for javascript
+# laravel-pagination
+paginaion for lists
 
-use laravel `__()` function in javascript with same syntax
+paginate your content and navigate to each page by using this simple package
 
 # installation
 to install this package run:
 
-`composer require mralgorithm/laravel-js-lang`
+`composer require mralgorithm/laravel-pagination`
 
 then run this command to publish required files:
-
-`php artisan vendor:publish --tag=laravel-js-lang`
-
-to create json files from your `lang` directory run this command:
-
-`php artisan JsLang:update`
-
-for the last step, add this script to your template file eather to use `JS` functions
-
-`<script id="laravel_js_lang_helper" lang="{{ App::getLocale() }}" src="{{ url('/laravel-js-lang/js/JsLang.js') }}"></script>`
-
-# functions
-## 1. `__()`:
-function __(key,replace = '',locale = ''){}
-
-as you can see, this function take three parameters(key,replace,locale) that key is necessary and others(replace,locale) is optional.
-this function return the translation(if exist!) or the key if the translation does not exist.
-
+```
+php artisan vendor:publish --tag=mralgorithm-laravel-pagination
+```
+for the last step, add this css to your template file
+```
+<link href="{{ url('laravel-pagination/laravelPaginationStyle.css') }}" rel="stylesheet">
+```
+# usage
+## in the controllers:
+to get offset you can use this function
+```
+\Mralgorithm\LaravelPagination\Helper::offset($pid,$limit)
+```
 ### example
 
-1. `__('auth.failed')`
-2. `__('hello i am mralgorithm!')`
-3. `__('auth.throttle',{seconds:'50'})`
-4. `__('auth.failed','','fa')`
+```
+public function show($pid = 1)
+    {
+        $limit = 15;
+        $Content = Posts::limit($limit)->offset(\Mralgorithm\LaravelPagination\Helper::offset($pid,$limit))->get();
+        return view('test',[
+            'Content' => $Content,
+            'count' => Posts::count(),
+            'pid' => $pid
+        ]);
+    }
+```
 
-for more detail please read [Laravel Localization Document](https://laravel.com/docs/9.x/localization)
-
-## 2. `lang_getLocale()`:
-take no parameters
-
-return current Locale
-
+## in views
+to paginate your list add this code to your views
+```
+$laravelPagination->pagination($count,$limit,$pid,url('/%s'))
+```
 ### example
-- `lang_getLocale()`
-> en
+1.
+```
+{{ $laravelPagination->pagination(@$count,15,$pid,url('/%s')) }}
+```
 
 
-## 3. `lang_setLocale()`
-take Locale
+2.
+```
+<body>
+    <table>
+        <thead>
+            ...
+        </thead>
+        <tbody>
+            @foreach ($Content as $C)
+                ...
+            @endforeach
+        </tbody>
+    </table>
+    {{ $laravelPagination->pagination(@$count,15,$pid,url('/%s')) }}
+</body>
+```
 
-return void
+# Configuration
+to config this package edit `/config/laravelPagination.php`
 
-### example
-- `lang_getLocale()`
-> en
-- `lang_setLocale('fa')`
-- `lang_getLocale()`
-> fa
+## parameters
+### mode:
+Dark/Light Mode
 
-## 4. `is_locale()`:
-take Locale
+set `light` to get lightmode
+set `dark` to get darkmode
 
-return true if Locale equal to Locale parameter and false in otherwise
+### next
+use this parameters to set next button text/icon
 
-### example 
-- `lang_setLocale('en')`
-- `is_locale('fa')`
-> false
-- `is_locale('en')`
-> true
+1. for font-awesome
+```
+<i class="fa fa-arrow-right"></i>
+```
 
-# Commands
-## 1. `JsLang:update`;
-this command convert your `Lang` directory to `JSON` files so JavaScript can use them
+2. for google font icon:
+```
+<i class="material-icons-round">arrow_right</i>
+```
 
-**run this command whenever you make a change in your `Lang` directory**
+3. for simple text:
+`next`
 
-`php artisan JsLang:update`
+ 4. for multilang support
+ ```
+ __('yourTranslationFile.next')
+```
+replace parameters according to your language files
+
+
+### previous
+use this parameters to set previous button text/icon
+
+ 1. for font-awesome
+ ```
+ <i class="fa fa-arrow-left"></i>
+ ```
+ 
+ 2. for google font icon:
+ ```
+ <i class="material-icons-round">arrow_left</i>
+ ```
+ 
+ 3. for simple text:
+ `next`
+ 
+ 4. for multilang support
+ ``` 
+ __('yourTranslationFile.previous')
+ ```
+ replace parameters according to your language files
