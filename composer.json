@@ -1,0 +1,25 @@
+{
+    "name": "mralgorithm/laravel-pagination",
+    "description": "pagination for laravel",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Mralgorithm\\LaravelPagination\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "MohammadReza Aghajani",
+            "email": "mralgorithm.2000@gmail.com"
+        }
+    ],
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers":[
+                "Mralgorithm\\LaravelPagination\\laravelPaginationServiceProvider"
+            ]
+        }
+    }
+}
