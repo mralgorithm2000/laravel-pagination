@@ -127,3 +127,9 @@ use this parameters to set previous button text/icon
  __('yourTranslationFile.previous')
  ```
  replace parameters according to your language files
+
+
+# Styling
+
+to change styles edit `public/laravel-pagination/laravelPaginationStyle.css`
+

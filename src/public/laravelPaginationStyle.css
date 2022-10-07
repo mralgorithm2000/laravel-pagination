@@ -51,9 +51,6 @@
 **  MODE DARK
 **
 */
-body{
-    background: #000;
-}
 
 .laravelPagination-mod-dark .laravelPaginationItem{
     display: inline-block;
