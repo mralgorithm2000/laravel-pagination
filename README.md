@@ -3,6 +3,13 @@ paginaion for lists
 
 paginate your content and navigate to each page by using this simple package
 
+## images
+### - darkmode
+![darkmode](https://iili.io/QXYsdG.png)
+
+### - lightmode 
+![lightmode](https://iili.io/QXa91e.png)
+
 # installation
 to install this package run:
 
